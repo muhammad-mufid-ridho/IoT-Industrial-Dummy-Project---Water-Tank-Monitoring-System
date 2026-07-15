@@ -12,7 +12,34 @@ mensimulasikan sistem monitoring real-time berbasis IoT.
 - (Next: InfluxDB + Grafana untuk historical data & OEE-style reporting)
 
 ## Architecture
-[diagram di sini]
+# Arsitektur — Tank Level Monitoring System
+
+```mermaid
+flowchart LR
+    A[ESP32 + HC-SR04<br/>Simulasi di Wokwi] -->|Publish| B[MQTT Broker<br/>broker.hivemq.com]
+    B -->|Subscribe| C[Node-RED<br/>Parse JSON]
+    C --> D[Dashboard<br/>Gauge, Chart, Alarm]
+    E[MQTT Explorer<br/>Testing / publish dummy] -.->|Dummy payload| B
+```
+
+## Keterangan alur
+
+1. **ESP32 + HC-SR04** — membaca jarak sensor ultrasonic, dikonversi jadi level persentase tangki, disimulasikan di Wokwi
+2. **MQTT Broker** — broker publik (`broker.hivemq.com`, port 1883) sebagai perantara pesan
+3. **Node-RED** — subscribe ke topic MQTT, parsing JSON, memproses logika alarm
+4. **Dashboard** — visualisasi real-time berupa gauge, chart historis, dan notifikasi alarm level rendah
+5. **MQTT Explorer** — tools testing untuk publish payload dummy secara manual, berguna saat Wokwi/ESP32 belum bisa dijalankan
+
+## Tech stack
+
+| Layer | Tool |
+|---|---|
+| Device | ESP32 (Wokwi simulation) |
+| Sensor | HC-SR04 Ultrasonic |
+| Protokol | MQTT |
+| Middleware | Node-RED |
+| Visualisasi | Node-RED Dashboard |
+
 
 ## Demo
 ![demo](assets/demo.gif)
