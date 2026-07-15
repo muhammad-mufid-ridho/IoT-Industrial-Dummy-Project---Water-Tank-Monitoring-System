@@ -16,7 +16,7 @@ mensimulasikan sistem monitoring real-time berbasis IoT.
 
 ## Demo
 ![demo](assets/demo.gif)
-Live simulation: [link Wokwi project]
+Live simulation: https://wokwi.com/projects/469486057453282305
 
 ## How to Run
 1. Buka link Wokwi, klik Run
